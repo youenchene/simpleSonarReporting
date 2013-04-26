@@ -1,8 +1,24 @@
 
 <div class="row">
     <div class="span3"></div>
-    <div class="span6 well">
-        <!-- the value of hello is getted from scope -->
-        <h3>{{hello}}</h3>
-    </div>
+    <div class="span6">
+    <table class="table  table-striped">
+        <tr>
+            <th>Name</th>
+            <th>version</th>
+            <th>Key</th>
+        </tr>
+        <tr ng-repeat="project in projects|filter:query|orderBy:sortorder">
+            <!--
+              use ngClassEven (http://docs.angularjs.org/api/ng.directive:ngClassEven)
+              to apply a class to even rows so we can make our table stripey
+            -->
+            <td ng-class-even="'even'">{{project.name}}</td>
+            <td ng-class-even="'even'">{{project.version}}</td>
+            <td ng-class-even="'even'">{{project.key}}</td>
+
+        </tr>
+    </table>
+</div>
+<div class="span2"></div>
 </div>

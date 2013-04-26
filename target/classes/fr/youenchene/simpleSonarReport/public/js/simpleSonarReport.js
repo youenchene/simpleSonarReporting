@@ -3,8 +3,8 @@
  * Declare MainCtrl, this controller does a GET on "/hello" and put the result in scope.
  */
 function MainCtrl($scope, $http) {
-    $http.get("/hello").success(function(data) {
-        $scope.hello = data.value;
+    $http.get("/projects").success(function(data) {
+        $scope.projects = data;
     });
 }
 MainCtrl.$inject = [ '$scope', '$http' ];
