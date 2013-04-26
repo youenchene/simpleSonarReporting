@@ -1,5 +1,7 @@
 package fr.youenchene.simpleSonarReport.model;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ychene
@@ -17,6 +19,8 @@ public class SonarProject {
 
     public String version;
 
+    public String date;
+
     @Override
     public String toString() {
         return "SonarProject{" +
@@ -24,6 +28,7 @@ public class SonarProject {
                 ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", version='" + version + '\'' +
+                ", date=" + date +
                 '}';
     }
 }

@@ -5,7 +5,8 @@
     <table class="table  table-striped">
         <tr>
             <th>Name</th>
-            <th>version</th>
+            <th>Version</th>
+            <th>Date</th>
             <th>Key</th>
         </tr>
         <tr ng-repeat="project in projects|filter:query|orderBy:sortorder">
@@ -15,6 +16,7 @@
             -->
             <td ng-class-even="'even'">{{project.name}}</td>
             <td ng-class-even="'even'">{{project.version}}</td>
+            <td ng-class-even="'even'">{{project.date}}</td>
             <td ng-class-even="'even'">{{project.key}}</td>
 
         </tr>
