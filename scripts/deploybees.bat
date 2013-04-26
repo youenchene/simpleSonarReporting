@@ -11,7 +11,7 @@ for /f %%i in ("%SCRIPT_PATH%\..") do (
 )
 
 set BEES_APP_ID=%1
-set MAIN_CLASS=fr.youenchene.simpleSonarReport.SimpleSonarReport
+set MAIN_CLASS=fr.youenchene.simpleSonarReport.SimpleSonarReportController
 
 if [%BEES_APP_ID%] == [] (
     echo "Use : deploybees <APP_ID>"

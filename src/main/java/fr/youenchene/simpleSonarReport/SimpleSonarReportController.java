@@ -4,22 +4,21 @@ import fr.ybonnel.simpleweb4j.exception.HttpErrorException;
 import fr.ybonnel.simpleweb4j.handlers.Response;
 import fr.ybonnel.simpleweb4j.handlers.Route;
 import fr.ybonnel.simpleweb4j.handlers.RouteParameters;
+import fr.youenchene.simpleSonarReport.model.SonarProject;
+import fr.youenchene.simpleSonarReport.model.SonarProjectDetails;
+import fr.youenchene.simpleSonarReport.services.SonarServices;
+
+import java.util.List;
 
 import static fr.ybonnel.simpleweb4j.SimpleWeb4j.*;
 
 /**
  * Main class.
  */
-public class SimpleSonarReport {
+public class SimpleSonarReportController {
 
-    /**
-     * Object return by route.
-     */
-    public static class Hello {
 
-        public String value;
-
-    }
+      private static SonarServices sonarServices=new SonarServices("http://10.31.0.92:9000/api/");
 
     /**
      * Start the server.
@@ -32,16 +31,24 @@ public class SimpleSonarReport {
         // Set the path to static resources.
         setPublicResourcesPath("/fr/youenchene/simpleSonarReport/public");
 
-
-        // Insert datas
-
-        // Declare the route "/hello" for GET method whith no param in request payload.
-        get(new Route<Void, Hello>("/hello", Void.class) {
+        get(new Route<Void, List<SonarProject>>("/projects", Void.class) {
             @Override
-            public Response<Hello> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
-                Hello hello = new Hello();
-                hello.value = "Hello World!";
-                return new Response<>(hello);
+            public Response<List<SonarProject>> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
+
+                return new Response<>(sonarServices.getSonarProjects());
+            }
+        });
+
+
+        get(new Route<Void, SonarProjectDetails>("/projectDetails/:key", Void.class) {
+            @Override
+            public Response<SonarProjectDetails> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
+                String key=routeParams.getParam("key");
+                SonarProjectDetails projectDetails=sonarServices.getSonarProjectDetails(key);
+                if (projectDetails==null)
+                    throw new HttpErrorException(404);
+                else
+                    return new Response<>(projectDetails);
             }
         });
 
