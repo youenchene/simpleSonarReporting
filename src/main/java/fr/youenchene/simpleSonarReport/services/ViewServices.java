@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,6 +16,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class ViewServices {
+
+    static Logger logger = Logger.getLogger("ViewServices");
 
     ViewMongoDao viewDao;
 
@@ -35,17 +38,20 @@ public class ViewServices {
 
     public void add(View view)
     {
+        logger.info("Creating :"+view.toString());
         viewDao.save(view);
     }
 
 
     public void update(View view)
     {
+        logger.info("Updating :"+view.toString());
         viewDao.save(view);
     }
 
     public void delete(String id)
     {
+        logger.info("Deleting :"+id);
         viewDao.deleteById(new ObjectId(id));
     }
 

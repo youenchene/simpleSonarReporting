@@ -44,13 +44,15 @@ public class SimpleSonarReportController {
         }
 
 
-        resource(new ViewRestResource("view",viewServices));
-
-        resource(new RestResource<View> ("view2", View.class) {
+        resource(new RestResource<View> ("view", View.class) {
 
             @Override
             public View getById(String id) throws HttpErrorException {
-                return viewServices.get(id);
+                View v=viewServices.get(id);
+                if (v!=null)
+                 return v;
+                else
+                 throw new HttpErrorException(404);
             }
 
             @Override
