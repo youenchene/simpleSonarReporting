@@ -5,20 +5,21 @@
     <table class="table  table-striped">
         <tr>
             <th>Name</th>
-            <th>Version</th>
-            <th>Date</th>
-            <th>Key</th>
+            <th>Line Coverage</th>
+            <th>Line</th>
+            <th>Unit Tests</th>
+            <th>Unit Tests Success</th>
         </tr>
-        <tr ng-repeat="project in projects|filter:query|orderBy:sortorder">
+        <tr ng-repeat="view in views|filter:query|orderBy:sortorder">
             <!--
               use ngClassEven (http://docs.angularjs.org/api/ng.directive:ngClassEven)
               to apply a class to even rows so we can make our table stripey
             -->
-            <td ng-class-even="'even'">{{project.name}}</td>
-            <td ng-class-even="'even'">{{project.version}}</td>
-            <td ng-class-even="'even'">{{project.date}}</td>
-            <td ng-class-even="'even'">{{project.key}}</td>
-
+            <td ng-class-even="'even'">{{view.name}}</td>
+            <td ng-class-even="'even'"></td>
+            <td ng-class-even="'even'"></td>
+            <td ng-class-even="'even'"></td>
+            <td ng-class-even="'even'"></td>
         </tr>
     </table>
 </div>

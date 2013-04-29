@@ -1,0 +1,25 @@
+<div>{{debug}}</div>
+<div class="row">
+    <form novalidate class="form-inline">
+        Name <input type="text" ng-model="name" />
+        <button class="btn btn-success" ng-click="addView(name)">Add Project Key</button>
+    </form>
+
+        <div ng-repeat="view in views" class="span9">
+
+            <h2>{{view.name}}  <a ng-click="removeView(view)" class="btn btn-danger btn-mini">delete</a></h2>
+
+            <form novalidate class="form-inline">
+                <select ng-model="project" ng-options="i.name for i in projects">
+                </select>
+                <button class="btn btn-success" ng-click="addProjectKeyToView(view,project.key)">Add Project Key</button>
+            </form>
+            <ul>
+            <li ng-repeat="key in view.projectKeys" class="span9">
+                {{key}}
+            </li>
+            </ul>
+
+
+        </div>
+</div>
