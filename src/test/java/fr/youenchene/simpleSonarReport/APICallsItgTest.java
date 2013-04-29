@@ -4,12 +4,14 @@ import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import fr.youenchene.simpleSonarReport.model.SonarProject;
 import fr.youenchene.simpleSonarReport.model.SonarProjectDetails;
+import fr.youenchene.simpleSonarReport.model.View;
 import org.fest.assertions.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 import static fr.ybonnel.simpleweb4j.SimpleWeb4j.stop;
@@ -21,14 +23,14 @@ import static fr.ybonnel.simpleweb4j.SimpleWeb4j.stop;
  * Time: 13:06
  * To change this template use File | Settings | File Templates.
  */
-public class APICalls {
+public class APICallsItgTest {
 
-    static Logger logger = Logger.getLogger("APICalls");
+    static Logger logger = Logger.getLogger("APICallsItgTest");
 
     private int port;
 
     @Before
-    public void setup() {
+    public void setup() throws UnknownHostException {
         port = Integer.getInteger("test.http.port", 9999);
         SimpleSonarReportController.startServer(port, false);
     }
@@ -59,5 +61,23 @@ public class APICalls {
         logger.info(projectDetails.toString());
         Assertions.assertThat(projectDetails).isNotNull();
 
+    }
+
+    @Test
+    public void should_return_a_404_on_get_project_details()
+    {
+        Assertions.assertThat(HttpRequest.get("http://localhost:"+port+"/projectDetails/notfound").code()).isEqualTo(404);
+
+    }
+
+    @Test
+    public void add_view()
+    {
+        //Given
+        View v=new View();
+        v.name="Test";
+        //
+        int status=HttpRequest.post("http://localhost:"+port+"/view").send(new Gson().toJson(v)).code();
+        Assertions.assertThat(status).isEqualTo(200);
     }
 }

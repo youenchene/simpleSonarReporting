@@ -43,11 +43,4 @@ public class SonarAPICall {
         Assertions.assertThat(projectDetails).isNotEmpty();
 
     }
-
-    @Test
-    public void should_return_a_404_on_get_project_details()
-    {
-        Assertions.assertThat(HttpRequest.get("http://10.31.0.92:9000/api/resources?metrics=coverage&resource=com.masternaut.synaps.middleware:devicemanagementapi-aggregator&includetrends=true").notFound()).isTrue();
-
-    }
 }
