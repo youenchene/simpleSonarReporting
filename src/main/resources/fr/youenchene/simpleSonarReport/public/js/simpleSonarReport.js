@@ -4,12 +4,24 @@
  */
 function MainCtrl($scope, $http, ViewServices) {
     $scope.views=ViewServices.all();
+
+
 }
 
 //MainCtrl.$inject = [ '$scope', '$http' ];
 
 function AdminCtrl($scope, $http, ViewServices) {
 
+    Array.prototype.remove = function() {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            while ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
     $scope.views=ViewServices.all();
 
     $http.get("/projects").success(function(data) {
@@ -32,11 +44,17 @@ function AdminCtrl($scope, $http, ViewServices) {
         view.name=name;
         $scope.views.push(view);
         ViewServices.add(view);
+
+        //TODO to remove
+        $scope.views=ViewServices.all();
     };
 
     $scope.removeView = function(view) {
-        $scope.views.splice(view);
+
+        $scope.views.remove(view);
         ViewServices.delete(view);
+        //TODO to remove
+        $scope.views=ViewServices.all();
     };
 
 }
@@ -62,7 +80,6 @@ app.factory("ViewServices", function($resource)
     var out;
     out= $resource('/view/:id',
         {
-            //Default parameters
 
         },
         {
@@ -74,18 +91,19 @@ app.factory("ViewServices", function($resource)
             ,
             one: {
                 method: 'GET',
-                isArray: false
+                isArray: false,
+                params: {id: '@id'}
             },
             add: {
                 method: 'POST'
             },
             update: {
                 method: 'PUT'
-                ,params: {id: 0}
+                ,params: {id: '@id'}
             },
             delete: {
                 method: 'DELETE'
-                ,params: {id: 0}
+                ,params: {id: '@id'}
             }
         });
 

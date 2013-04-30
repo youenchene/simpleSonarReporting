@@ -1,32 +1,48 @@
 package fr.youenchene.simpleSonarReport.model;
 
+import com.github.jmkgreen.morphia.annotations.Entity;
+import com.github.jmkgreen.morphia.annotations.Id;
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: ychene
- * Date: 29/04/13
- * Time: 08:09
+ * Date: 30/04/13
+ * Time: 14:47
  * To change this template use File | Settings | File Templates.
  */
-public class View {
+@Entity("view")
+public class ViewDaoObject {
 
-
-    public String id;
+    @Id
+    public ObjectId id;
 
     public String name;
 
     public List<String> projectKeys;
 
 
+    public ViewDaoObject() {
+    }
+
+    public ViewDaoObject(View v) {
+        if (v.id!=null)
+         id=new ObjectId(v.id);
+        name=v.name;
+        projectKeys=v.projectKeys;
+    }
+
     @Override
     public String toString() {
         return "View{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", projectKeys=" + projectKeys +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -49,4 +65,16 @@ public class View {
         result = 31 * result + (projectKeys != null ? projectKeys.hashCode() : 0);
         return result;
     }
+
+
+    public View convertToView(){
+        View v=new View();
+        v.id=this.id.toString();
+        v.name=this.name;
+        v.projectKeys=this.projectKeys;
+        return v;
+    }
+
+
+
 }

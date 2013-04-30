@@ -2,9 +2,12 @@ package fr.youenchene.simpleSonarReport.services;
 
 import fr.youenchene.simpleSonarReport.Dao.ViewMongoDao;
 import fr.youenchene.simpleSonarReport.model.View;
+import fr.youenchene.simpleSonarReport.model.ViewDaoObject;
 import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -27,26 +30,44 @@ public class ViewServices {
 
     public List<View> getAll()
     {
-        return  viewDao.find().asList();
+        List<View> out=new ArrayList<View>();
+        List<ViewDaoObject> l=viewDao.find().asList();
+        if (l!=null)
+        {
+            Iterator<ViewDaoObject> it=l.iterator();
+            while(it.hasNext())
+            {
+                ViewDaoObject vdo=it.next();
+                out.add(vdo.convertToView());
+            }
+        }
+        return out;
     }
 
     public View get(String id)
     {
-        return viewDao.get(new ObjectId(id));
+        ViewDaoObject v =viewDao.get(new ObjectId(id));
+        if (v!=null)
+            return v.convertToView();
+        else
+            return null;
     }
 
 
     public void add(View view)
     {
         logger.info("Creating :"+view.toString());
-        viewDao.save(view);
+        ViewDaoObject vdo=new ViewDaoObject(view);
+        viewDao.save(vdo);
+        view.id=vdo.id.toString();
+        logger.info("New id:"+view.id);
     }
 
 
     public void update(View view)
     {
         logger.info("Updating :"+view.toString());
-        viewDao.save(view);
+        viewDao.save(new ViewDaoObject(view));
     }
 
     public void delete(String id)

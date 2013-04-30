@@ -1,0 +1,77 @@
+package fr.youenchene.simpleSonarReport.process;
+
+import fr.youenchene.simpleSonarReport.model.SonarMeasure;
+import fr.youenchene.simpleSonarReport.model.SonarProjectDetails;
+import fr.youenchene.simpleSonarReport.model.ViewDetails;
+
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: ychene
+ * Date: 30/04/13
+ * Time: 16:56
+ * To change this template use File | Settings | File Templates.
+ */
+public class SonarCalculation {
+
+
+    public static ViewDetails calculateViewDetailsFromSonarProjectDetails(List<SonarProjectDetails> list)
+    {
+        Double totalline=new Double(0);
+        Double totalunittest=new Double(0);
+        Double totalcoverageweight=new Double(0);
+        Double totalsuccessweight=new Double(0);
+
+        if (list!=null)
+        {
+          Iterator<SonarProjectDetails> it=list.iterator();
+          while(it.hasNext())
+          {
+              Double coverageweight=new Double(0);
+              Double line=new Double(0);
+              Double successweight=new Double(0);
+              Double unittest=new Double(0);
+              SonarProjectDetails spd=it.next();
+              Iterator<SonarMeasure> itm=spd.msr.iterator();
+              while(itm.hasNext())
+              {
+                  SonarMeasure msr=itm.next();
+                  //line_coverage,tests,test_execution_time,test_success_density,lines,weighted_violations
+                  if (msr.key.equals("line_coverage"))
+                  {
+                      coverageweight=msr.val;
+                  }
+                  if (msr.key.equals("lines"))
+                  {
+                      totalline+=msr.val;
+                      line=msr.val;
+                  }
+                  if (msr.key.equals("tests"))
+                  {
+                      totalunittest+=msr.val;
+                      unittest=msr.val;
+                  }
+                  if (msr.key.equals("test_success_density"))
+                  {
+                      successweight=msr.val;
+                  }
+              }
+
+              totalcoverageweight+=coverageweight*line;
+              totalsuccessweight+=successweight*unittest;
+
+
+          }
+        }
+
+        ViewDetails d=new ViewDetails();
+        d.line=totalline.intValue();
+        d.unitTests=totalunittest.intValue();
+        d.lineCoverage=totalcoverageweight/totalline;
+        d.unitTestsSuccess=totalsuccessweight/totalunittest;
+        return d;
+    }
+
+}

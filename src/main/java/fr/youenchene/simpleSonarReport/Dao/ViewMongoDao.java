@@ -6,6 +6,7 @@ import com.github.jmkgreen.morphia.dao.BasicDAO;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 import fr.youenchene.simpleSonarReport.model.View;
+import fr.youenchene.simpleSonarReport.model.ViewDaoObject;
 import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
@@ -17,7 +18,7 @@ import java.net.UnknownHostException;
  * Time: 08:13
  * To change this template use File | Settings | File Templates.
  */
-public class ViewMongoDao extends BasicDAO<View,ObjectId> {
+public class ViewMongoDao extends BasicDAO<ViewDaoObject,ObjectId> {
 
     public ViewMongoDao( String uri ) throws UnknownHostException
     {

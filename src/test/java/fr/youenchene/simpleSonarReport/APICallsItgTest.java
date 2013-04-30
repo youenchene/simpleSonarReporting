@@ -119,6 +119,7 @@ public class APICallsItgTest {
         logger.info(view2.toString());
         Assertions.assertThat(view).isEqualTo(view2);
         //When
+        logger.info("http://localhost:"+port+"/view/"+views[0].id);
         int status2=HttpRequest.delete("http://localhost:"+port+"/view/"+views[0].id).code();
         //Then
         Assertions.assertThat(status2).isEqualTo(204);

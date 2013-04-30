@@ -8,10 +8,14 @@ import fr.ybonnel.simpleweb4j.handlers.resource.RestResource;
 import fr.youenchene.simpleSonarReport.model.SonarProject;
 import fr.youenchene.simpleSonarReport.model.SonarProjectDetails;
 import fr.youenchene.simpleSonarReport.model.View;
+import fr.youenchene.simpleSonarReport.model.ViewDetails;
+import fr.youenchene.simpleSonarReport.process.SonarCalculation;
 import fr.youenchene.simpleSonarReport.services.SonarServices;
 import fr.youenchene.simpleSonarReport.services.ViewServices;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static fr.ybonnel.simpleweb4j.SimpleWeb4j.*;
@@ -48,11 +52,19 @@ public class SimpleSonarReportController {
 
             @Override
             public View getById(String id) throws HttpErrorException {
-                View v=viewServices.get(id);
-                if (v!=null)
-                 return v;
-                else
-                 throw new HttpErrorException(404);
+                try
+                {
+                    View v=viewServices.get(id);
+                    if (v!=null)
+                     return v;
+                    else
+                     throw new HttpErrorException(404);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    throw e;
+                }
             }
 
             @Override
@@ -67,12 +79,42 @@ public class SimpleSonarReportController {
 
             @Override
             public void create(View resource) throws HttpErrorException {
+                try
+                {
                 viewServices.add(resource);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                    throw e;
+                }
             }
 
             @Override
             public void delete(String id) throws HttpErrorException {
                 viewServices.delete(id);
+            }
+        });
+
+
+        get(new Route<Void, ViewDetails>("/view/:id/details", Void.class) {
+            @Override
+            public Response<ViewDetails> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
+                String id=routeParams.getParam("id");
+                View v=viewServices.get(id);
+                ViewDetails details=new ViewDetails();
+                List<SonarProjectDetails> spdl=new ArrayList<>();
+                if (v.projectKeys!=null)
+                {
+                    Iterator<String> it=v.projectKeys.iterator();
+                    while(it.hasNext())
+                    {
+                       String key=it.next();
+                       spdl.add(sonarServices.getSonarProjectDetails(key));
+                    }
+                }
+                details= SonarCalculation.calculateViewDetailsFromSonarProjectDetails(spdl);
+                return new Response<>(details);
             }
         });
 
