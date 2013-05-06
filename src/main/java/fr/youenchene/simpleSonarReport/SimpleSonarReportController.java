@@ -97,23 +97,31 @@ public class SimpleSonarReportController {
         });
 
 
-        get(new Route<Void, ViewDetails>("/view/:id/details", Void.class) {
+        get(new Route<Void, List<ViewDetails>>("/viewWithDetails", Void.class) {
             @Override
-            public Response<ViewDetails> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
-                String id=routeParams.getParam("id");
-                View v=viewServices.get(id);
-                ViewDetails details=new ViewDetails();
-                List<SonarProjectDetails> spdl=new ArrayList<>();
-                if (v.projectKeys!=null)
+            public Response<List<ViewDetails>> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
+
+                List<View> vl=viewServices.getAll();
+                List<ViewDetails> details=new ArrayList<ViewDetails>();
+                Iterator<View> itv=vl.iterator();
+                while(itv.hasNext())
                 {
-                    Iterator<String> it=v.projectKeys.iterator();
-                    while(it.hasNext())
+                    View v=itv.next();
+                    List<SonarProjectDetails> spdl=new ArrayList<>();
+                    if (v.projectKeys!=null)
                     {
-                       String key=it.next();
-                       spdl.add(sonarServices.getSonarProjectDetails(key));
+                        Iterator<String> it=v.projectKeys.iterator();
+                        while(it.hasNext())
+                        {
+                           String key=it.next();
+                           spdl.add(sonarServices.getSonarProjectDetails(key));
+                        }
                     }
+                    ViewDetails vd=SonarCalculation.calculateViewDetailsFromSonarProjectDetails(spdl);
+                    vd.viewId=v.id;
+                    vd.viewName=v.name;
+                    details.add(vd);
                 }
-                details= SonarCalculation.calculateViewDetailsFromSonarProjectDetails(spdl);
                 return new Response<>(details);
             }
         });

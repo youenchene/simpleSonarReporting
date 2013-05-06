@@ -9,6 +9,9 @@ package fr.youenchene.simpleSonarReport.model;
  */
 public class ViewDetails {
 
+   public String viewId;
+   public String viewName;
+
    public Integer line;
    public Double lineCoverage;
    public Integer unitTests;

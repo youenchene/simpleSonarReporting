@@ -1,7 +1,7 @@
 
 <div class="row">
-    <div class="span3"></div>
-    <div class="span6">
+    <div class="span1"></div>
+    <div class="span8">
     <table class="table  table-striped">
         <tr>
             <th>Name</th>
@@ -10,16 +10,16 @@
             <th>Unit Tests</th>
             <th>Unit Tests Success</th>
         </tr>
-        <tr ng-repeat="view in views|filter:query|orderBy:sortorder">
+        <tr ng-repeat="view in viewsDetails|filter:query|orderBy:sortorder">
             <!--
               use ngClassEven (http://docs.angularjs.org/api/ng.directive:ngClassEven)
               to apply a class to even rows so we can make our table stripey
             -->
-            <td ng-class-even="'even'">{{view.name}}</td>
-            <td ng-class-even="'even'"></td>
-            <td ng-class-even="'even'"></td>
-            <td ng-class-even="'even'"></td>
-            <td ng-class-even="'even'"></td>
+            <td ng-class-even="'even'">{{view.viewName}}</td>
+            <td ng-class-even="'even'" style="text-align:right;">{{view.lineCoverage | number:1}} %</td>
+            <td ng-class-even="'even'" style="text-align:right;">{{view.line | number:0}}</td>
+            <td ng-class-even="'even'" style="text-align:right;">{{view.unitTests}}</td>
+            <td ng-class-even="'even'" style="text-align:right;">{{view.unitTestsSuccess | number:1}} %</td>
         </tr>
     </table>
 </div>

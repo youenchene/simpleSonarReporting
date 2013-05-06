@@ -41,21 +41,21 @@ public class SonarCalculation {
                   //line_coverage,tests,test_execution_time,test_success_density,lines,weighted_violations
                   if (msr.key.equals("line_coverage"))
                   {
-                      coverageweight=msr.val;
+                      coverageweight=msr.val.doubleValue();
                   }
                   if (msr.key.equals("lines"))
                   {
                       totalline+=msr.val;
-                      line=msr.val;
+                      line=msr.val.doubleValue();
                   }
                   if (msr.key.equals("tests"))
                   {
                       totalunittest+=msr.val;
-                      unittest=msr.val;
+                      unittest=msr.val.doubleValue();
                   }
                   if (msr.key.equals("test_success_density"))
                   {
-                      successweight=msr.val;
+                      successweight=msr.val.doubleValue();
                   }
               }
 
@@ -69,8 +69,10 @@ public class SonarCalculation {
         ViewDetails d=new ViewDetails();
         d.line=totalline.intValue();
         d.unitTests=totalunittest.intValue();
-        d.lineCoverage=totalcoverageweight/totalline;
-        d.unitTestsSuccess=totalsuccessweight/totalunittest;
+        if (totalline!=0)
+            d.lineCoverage=totalcoverageweight/totalline;
+        if (totalunittest!=0)
+            d.unitTestsSuccess=totalsuccessweight/totalunittest;
         return d;
     }
 

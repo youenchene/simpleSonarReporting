@@ -3,8 +3,10 @@
  * Declare MainCtrl, this controller does a GET on "/hello" and put the result in scope.
  */
 function MainCtrl($scope, $http, ViewServices) {
-    $scope.views=ViewServices.all();
 
+    $http.get("/viewWithDetails").success(function(data) {
+        $scope.viewsDetails = data;
+    });
 
 }
 

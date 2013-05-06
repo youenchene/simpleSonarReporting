@@ -10,9 +10,9 @@ package fr.youenchene.simpleSonarReport.model;
 public class SonarMeasure {
 
     public String key;
-    public Double val;
+    public Float val;
     public String frmt_val;
-    public Double trend;
+    public Float trend;
 
     @Override
     public String toString() {
