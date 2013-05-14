@@ -1,10 +1,14 @@
 fr\youenchene\simpleSonarReport\services\ViewServices.class
 fr\youenchene\simpleSonarReport\SimpleSonarReportController$3.class
-fr\youenchene\simpleSonarReport\model\SonarMeasure.class
 fr\youenchene\simpleSonarReport\model\SonarProjectDetails.class
+fr\youenchene\simpleSonarReport\model\SonarMeasure.class
 fr\youenchene\simpleSonarReport\model\SonarProject.class
+fr\youenchene\simpleSonarReport\SimpleSonarReportController$4.class
 fr\youenchene\simpleSonarReport\SimpleSonarReportController.class
+fr\youenchene\simpleSonarReport\model\ViewDetails.class
 fr\youenchene\simpleSonarReport\SimpleSonarReportController$2.class
+fr\youenchene\simpleSonarReport\process\SonarCalculation.class
+fr\youenchene\simpleSonarReport\model\ViewDaoObject.class
 fr\youenchene\simpleSonarReport\Dao\ViewMongoDao.class
 fr\youenchene\simpleSonarReport\SimpleSonarReportController$1.class
 fr\youenchene\simpleSonarReport\model\View.class

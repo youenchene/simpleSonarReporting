@@ -23,7 +23,8 @@ import static fr.ybonnel.simpleweb4j.SimpleWeb4j.stop;
  * Date: 26/04/13
  * Time: 13:06
  * To change this template use File | Settings | File Templates.
- */
+        */
+@Ignore
 public class APICallsItgTest {
 
     static Logger logger = Logger.getLogger("APICallsItgTest");

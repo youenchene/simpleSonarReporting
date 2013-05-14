@@ -34,28 +34,32 @@ public class SonarCalculation {
               Double successweight=new Double(0);
               Double unittest=new Double(0);
               SonarProjectDetails spd=it.next();
-              Iterator<SonarMeasure> itm=spd.msr.iterator();
-              while(itm.hasNext())
+              if ((spd!=null)&&(spd.msr!=null))
               {
-                  SonarMeasure msr=itm.next();
-                  //line_coverage,tests,test_execution_time,test_success_density,lines,weighted_violations
-                  if (msr.key.equals("line_coverage"))
+              Iterator<SonarMeasure> itm=spd.msr.iterator();
+              if (itm!=null)
+                  while(itm.hasNext())
                   {
-                      coverageweight=msr.val.doubleValue();
-                  }
-                  if (msr.key.equals("lines"))
-                  {
-                      totalline+=msr.val;
-                      line=msr.val.doubleValue();
-                  }
-                  if (msr.key.equals("tests"))
-                  {
-                      totalunittest+=msr.val;
-                      unittest=msr.val.doubleValue();
-                  }
-                  if (msr.key.equals("test_success_density"))
-                  {
-                      successweight=msr.val.doubleValue();
+                      SonarMeasure msr=itm.next();
+                      //line_coverage,tests,test_execution_time,test_success_density,lines,weighted_violations
+                      if (msr.key.equals("line_coverage"))
+                      {
+                          coverageweight=msr.val.doubleValue();
+                      }
+                      if (msr.key.equals("lines"))
+                      {
+                          totalline+=msr.val;
+                          line=msr.val.doubleValue();
+                      }
+                      if (msr.key.equals("tests"))
+                      {
+                          totalunittest+=msr.val;
+                          unittest=msr.val.doubleValue();
+                      }
+                      if (msr.key.equals("test_success_density"))
+                      {
+                          successweight=msr.val.doubleValue();
+                      }
                   }
               }
 
