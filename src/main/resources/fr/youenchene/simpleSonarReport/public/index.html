@@ -5,13 +5,10 @@
         <title>Simple Sonar Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-        <style>
-            body {
-                 padding-top: 60px;  /* 60px to make the container go all the way to the bottom of the topbar */
-            }
-        </style>
+        <link href="css/simplesonarreport.css" rel="stylesheet">
     </head>
     <body ng-app="simpleSonarReport">
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,6 +26,9 @@
                             <a href="#/main">Home</a>
                         </li>
                         <li class="">
+                            <a href="#/dash">Dashboard</a>
+                        </li>
+                        <li class="">
                             <a href="#/admin">Admin</a>
                         </li>
                     </ul>
@@ -36,13 +36,18 @@
                 </div>
             </div>
         </div>
+        <p></p>
+        <p></p>
+        <p></p>
 
         <!-- angular will insert the template in container -->
         <div class="container" ng-view>
+
         </div>
         <!-- Placed javascripts at the end of the document so the pages load faster -->
         <script src="js/angular.min.js"></script>
         <script src="js/angular-resource.min.js"></script>
+        <script src="js/angular-cookies.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/simpleSonarReport.js"></script>

@@ -1,0 +1,9 @@
+
+<div class="row">
+    <form class="form-inline">
+        <label>Select View</label> <select ng-model="selectedView" ng-options="v.name for v in views" ng-change="showDash()">
+        </select>
+    </form>
+    <h2>{{viewname}}</h2>
+    <p class="dashCoverage">{{viewlinecoverage | number:1}} %</p>
+</div>

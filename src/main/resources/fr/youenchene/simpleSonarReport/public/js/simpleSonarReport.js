@@ -10,6 +10,38 @@ function MainCtrl($scope, $http, ViewServices) {
 
 }
 
+
+/**
+ * Declare MainCtrl, this controller does a GET on "/hello" and put the result in scope.
+ */
+function DashCtrl($scope, $http, $cookieStore, ViewServices) {
+
+    $http.get("/view").success(function(data) {
+        $scope.views = data;
+    });
+
+    $scope.showDash = function() {
+        $scope.viewname= $scope.selectedView.name;
+        $cookieStore.put('dash_id',$scope.selectedView.id);
+        refreshDash($scope.selectedView.id);
+    };
+
+    function refreshDash(vid)
+    {
+        $http.get("/viewWithDetails/"+vid).success(function(data) {
+            $scope.viewname = data.viewName;
+            $scope.viewlinecoverage = data.lineCoverage;
+        });
+    }
+
+    var dashid=$cookieStore.get('dash_id');
+    if (dashid != undefined)
+    {
+        refreshDash(dashid);
+    }
+}
+
+
 //MainCtrl.$inject = [ '$scope', '$http' ];
 
 function AdminCtrl($scope, $http, ViewServices) {
@@ -68,10 +100,11 @@ function AdminCtrl($scope, $http, ViewServices) {
  * Declare the routes.
  * Route /main (#/main in browser) use the controller MainCtrl with template main.html
  */
-var app =angular.module('simpleSonarReport', ['ngResource']);
+var app =angular.module('simpleSonarReport', ['ngResource','ngCookies']);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/main', {templateUrl:'partial/main.html', controller:MainCtrl});
+    $routeProvider.when('/dash', {templateUrl:'partial/dash.html', controller:DashCtrl});
     $routeProvider.when('/admin', {templateUrl:'partial/admin.html', controller:AdminCtrl});
     $routeProvider.otherwise({redirectTo: '/main'});
 }]);

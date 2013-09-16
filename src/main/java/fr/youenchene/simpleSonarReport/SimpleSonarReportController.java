@@ -97,6 +97,30 @@ public class SimpleSonarReportController {
         });
 
 
+        get(new Route<Void, ViewDetails>("/viewWithDetails/:id", Void.class) {
+            @Override
+            public Response<ViewDetails> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
+                String id=routeParams.getParam("id");
+                List<View> vl=viewServices.getAll();
+
+                    View v=viewServices.get(id);
+                    List<SonarProjectDetails> spdl=new ArrayList<>();
+                    if (v.projectKeys!=null)
+                    {
+                        Iterator<String> it=v.projectKeys.iterator();
+                        while(it.hasNext())
+                        {
+                           String key=it.next();
+                           spdl.add(sonarServices.getSonarProjectDetails(key));
+                        }
+                    }
+                    ViewDetails vd=SonarCalculation.calculateViewDetailsFromSonarProjectDetails(spdl);
+                    vd.viewId=v.id;
+                    vd.viewName=v.name;
+                    return new Response<>(vd);
+            }
+        });
+
         get(new Route<Void, List<ViewDetails>>("/viewWithDetails", Void.class) {
             @Override
             public Response<List<ViewDetails>> handle(Void param, RouteParameters routeParams) throws HttpErrorException {
@@ -113,8 +137,8 @@ public class SimpleSonarReportController {
                         Iterator<String> it=v.projectKeys.iterator();
                         while(it.hasNext())
                         {
-                           String key=it.next();
-                           spdl.add(sonarServices.getSonarProjectDetails(key));
+                            String key=it.next();
+                            spdl.add(sonarServices.getSonarProjectDetails(key));
                         }
                     }
                     ViewDetails vd=SonarCalculation.calculateViewDetailsFromSonarProjectDetails(spdl);

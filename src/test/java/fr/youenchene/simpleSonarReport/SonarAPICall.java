@@ -30,7 +30,6 @@ public class SonarAPICall {
         SonarProject[] projects= new Gson().fromJson(response, SonarProject[].class);
         logger.info(projects[0].toString());
         Assertions.assertThat(projects).isNotEmpty();
-
     }
 
     @Test
