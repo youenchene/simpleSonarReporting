@@ -4,3 +4,20 @@
     text-align: center;
     font-size: 800%;
 }
+
+.dashTrend {
+    margin-top : 60px;
+    text-align: center;
+    font-size: 200%;
+}
+
+.dashTrendDetails{
+    margin-top : 10px;
+    text-align: center;
+    font-size: 80%;
+}
+
+.tableTrend
+{
+    height: 18px;
+}

@@ -35,7 +35,7 @@ public class SonarAPICall {
     @Test
     public void get_project_details()
     {
-        String response=  HttpRequest.get("http://10.31.0.92:9000/api/resources?metrics=coverage&resource=com.masternaut.synaps.middleware:devicemanagementapi-aggregator").body();
+        String response=  HttpRequest.get("http://10.31.0.92:9000/api/resources?metrics=line_coverage,tests,test_execution_time,test_success_density,lines,weighted_violations&resource=com.masternaut.platform.gateway:collector-calamp&includetrends=true").body();
         logger.info(response);
         SonarProjectDetails[] projectDetails= new Gson().fromJson(response, SonarProjectDetails[].class);
         logger.info(projectDetails[0].toString());

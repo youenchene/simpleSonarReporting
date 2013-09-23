@@ -5,5 +5,21 @@
         </select>
     </form>
     <h2>{{viewname}}</h2>
-    <p class="dashCoverage">{{viewlinecoverage | number:1}} %</p>
+    <p class="dashCoverage">{{viewlinecoverage | number:1}} % <p>
+        <div ng-show="viewLineCoverageTrend > 0.66" class="dashTrend" >
+            <img  src="img/trend-high.png"  alt="high" />
+        </div>
+    <div ng-show="viewLineCoverageTrend > 0.1 && viewLineCoverageTrend <= 0.66" class="dashTrend"  >
+        <img src="img/trend-medium.png" alt="medium"  />
+    </div>
+    <div ng-show="viewLineCoverageTrend >=-0.1 && viewLineCoverageTrend <= 0.1" class="dashTrend" >
+        <img src="img/trend-flat.png" alt="flat"  />
+    </div>
+    <div ng-show="viewLineCoverageTrend < - 0.1 && viewLineCoverageTrend >= -0.66" class="dashTrend" >
+        <img src="img/trend-negative-medium.png" alt="negative medium"  />
+    </div>
+    <div ng-show="viewLineCoverageTrend < -0.66" class="dashTrend" >
+        <img src="img/trend-negative-high.png" alt="negative high"  />
+    </div>
+    <div class="dashTrendDetails">{{viewLineCoverageTrend | number:2}} </div>
 </div>

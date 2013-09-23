@@ -31,6 +31,7 @@ function DashCtrl($scope, $http, $cookieStore, ViewServices) {
         $http.get("/viewWithDetails/"+vid).success(function(data) {
             $scope.viewname = data.viewName;
             $scope.viewlinecoverage = data.lineCoverage;
+            $scope.viewLineCoverageTrend = data.lineCoverageTrend;
         });
     }
 

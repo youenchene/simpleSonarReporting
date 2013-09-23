@@ -16,5 +16,9 @@ public class ViewDetails {
    public Double lineCoverage;
    public Integer unitTests;
    public Double unitTestsSuccess;
+   public Float lineCoverageTrend;
+    public Float lineTrend;
+    public Float unitTestTrend;
+
 
 }

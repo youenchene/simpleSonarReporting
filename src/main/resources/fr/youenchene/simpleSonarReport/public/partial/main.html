@@ -6,8 +6,11 @@
         <tr>
             <th>Name</th>
             <th>Line Coverage</th>
+            <th></th>
             <th>Line</th>
+            <th></th>
             <th>Unit Tests</th>
+            <th></th>
             <th>Unit Tests Success</th>
         </tr>
         <tr ng-repeat="view in viewsDetails|filter:query|orderBy:sortorder">
@@ -17,8 +20,63 @@
             -->
             <td ng-class-even="'even'">{{view.viewName}}</td>
             <td ng-class-even="'even'" style="text-align:right;">{{view.lineCoverage | number:1}} %</td>
+            <td ng-class-even="'even'" style="text-align:right;">
+                <div ng-show="view.lineCoverageTrend > 0.66" >
+                    <img  src="img/trend-high.png"  alt="high"  class="tableTrend"/>
+                </div>
+                <div ng-show="view.lineCoverageTrend > 0.1 && view.lineCoverageTrend <= 0.66" class="tableTrend"  >
+                    <img src="img/trend-medium.png" alt="medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineCoverageTrend >=-0.1 && view.lineCoverageTrend <= 0.1" class="tableTrend" >
+                    <img src="img/trend-flat.png" alt="flat"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineCoverageTrend < - 0.1 && view.lineCoverageTrend >= -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-medium.png" alt="negative medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineCoverageTrend < -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-high.png" alt="negative high" class="tableTrend"  />
+                </div>
+            </td>
+
+
             <td ng-class-even="'even'" style="text-align:right;">{{view.line | number:0}}</td>
+            <td ng-class-even="'even'" style="text-align:right;">
+                <div ng-show="view.lineTrend > 0.66" >
+                    <img  src="img/trend-high.png"  alt="high"  class="tableTrend"/>
+                </div>
+                <div ng-show="view.lineTrend > 0.1 && view.lineTrend <= 0.66" class="tableTrend"  >
+                    <img src="img/trend-medium.png" alt="medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineTrend >=-0.1 && view.lineTrend <= 0.1" class="tableTrend" >
+                    <img src="img/trend-flat.png" alt="flat"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineTrend < - 0.1 && view.lineTrend >= -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-medium.png" alt="negative medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.lineTrend < -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-high.png" alt="negative high" class="tableTrend"  />
+                </div>
+            </td>
+
             <td ng-class-even="'even'" style="text-align:right;">{{view.unitTests}}</td>
+            <td ng-class-even="'even'" style="text-align:right;">
+                <div ng-show="view.unitTestTrend > 0.66" >
+                    <img  src="img/trend-high.png"  alt="high"  class="tableTrend"/>
+                </div>
+                <div ng-show="view.unitTestTrend > 0.1 && view.unitTestTrend <= 0.66" class="tableTrend"  >
+                    <img src="img/trend-medium.png" alt="medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.unitTestTrend >=-0.1 && view.unitTestTrend <= 0.1" class="tableTrend" >
+                    <img src="img/trend-flat.png" alt="flat"  class="tableTrend" />
+                </div>
+                <div ng-show="view.unitTestTrend < - 0.1 && view.unitTestTrend >= -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-medium.png" alt="negative medium"  class="tableTrend" />
+                </div>
+                <div ng-show="view.unitTestTrend < -0.66" class="tableTrend" >
+                    <img src="img/trend-negative-high.png" alt="negative high" class="tableTrend"  />
+                </div>
+            </td>
+
             <td ng-class-even="'even'" style="text-align:right;">{{view.unitTestsSuccess | number:1}} %</td>
         </tr>
     </table>
